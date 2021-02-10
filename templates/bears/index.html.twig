@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {% for beer in beers %}
+            <div class="col-md-4 mb-4">
+                <div class="card border rounded">
+                    <img class="card-img-top" src="{{ asset('assets/images/biere.jpg') }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ beer.name }}</h5>
+                        <p class="card-text">Degrées: {{ beer.degree }}</p>
+{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
