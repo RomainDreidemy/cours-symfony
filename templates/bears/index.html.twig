@@ -7,8 +7,10 @@
                 <div class="card border rounded">
                     <img class="card-img-top" src="{{ asset('assets/images/biere.jpg') }}" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">{{ beer.name }}</h5>
-                        <p class="card-text">Degrées: {{ beer.degree }}</p>
+                        <h5 class="card-title">{{ beer.name }}</span></h5>
+                        <p class="card-text">Degrées: {{ beer.description }}</p>
+                        <p>{{ beer.publishedAt|date('d/m/Y') }}</p>
+                        <p>Prix: {{ beer.price }}€</p>
 {#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
                     </div>
                 </div>

@@ -1,32 +1,47 @@
 <?php
 namespace App\Services;
 
+use App\Entity\Beer;
+use App\Entity\Country;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BeerService
 {
     private $client;
+    private $manager;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, EntityManagerInterface $manager)
     {
         $this->client = $client;
+        $this->manager = $manager;
     }
 
-    public function getAll(): Array
+    public function getAll(): array
     {
-        $response = $this->client->request(
-            'GET',
-            'https://raw.githubusercontent.com/Antoine07/hetic_symfony/main/Introduction/Data/beers.json'
-        );
+        return $this->manager->getRepository(Beer::class)->findAll();
+    }
 
-        $statusCode = $response->getStatusCode();
+    public function create(string $name, \DateTime $publishedAt = null, string $description = null, float $price = null, array $categories = [], Country $country = null): Beer
+    {
+        $beer = (new Beer())
+            ->setName($name)
+            ->setPublishedAt($publishedAt)
+            ->setDescription($description)
+            ->setPrice($price)
+        ;
 
-        $contentType = $response->getHeaders()['content-type'][0];
+        foreach ($categories as $category){
+            $beer->addCategory($category);
+        }
 
-        $content = $response->getContent();
+        if(!is_null($country)){
+            $beer->setCountry($country);
+        }
 
-        $content = $response->toArray();
+        $this->manager->persist($beer);
+        $this->manager->flush();
 
-        return $content['beers'];
+        return $beer;
     }
 }

@@ -2,23 +2,21 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        {% for country in countries %}
+            <div class="col-sm-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ country.name }}</h5>
+                        <p class="card-text">
+                            <ul>
+                                <li>Adresse: {{ country.adresse }}</li>
+                                <li>Email: {{ country.email }}</li>
+                            </ul>
+                        </p>
+                        <a href="{{ path('country_beer', {id: country.id}) }}" class="btn btn-primary">Voir la page pays</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
