@@ -29,32 +29,22 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Category
+    /**
+     * Selectionne la liste des catégories spécials pour une bière dont l'id est donné.
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findCatSpecial(int $id)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->join('c.beers', 'b') // raisonner en terme de relation
+            ->where('b.id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('c.term = :term')
+            ->setParameter('term', 'special')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
 }
