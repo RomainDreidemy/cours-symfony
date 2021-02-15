@@ -85,7 +85,7 @@ class BarController extends AbstractController
     public function beerByCategory(Category $category): Response
     {
         return $this->render('bears/index.html.twig', [
-            'title' => $category->getName(),
+            'title' => 'Bières ' . $category->getName(),
             'beers' => $category->getBeer()
         ]);
     }
@@ -101,8 +101,12 @@ class BarController extends AbstractController
         ]);
     }
 
-    public function mainMenu() {
-        return $this->render('partials/menu.html.twig', [ 'categories' =>  $this->manager->getRepository(Category::class)->findByTerm('normal')]);
+    public function mainMenu(string $routeName, string $category_id) {
+        return $this->render('partials/menu.html.twig', [
+            'categories' =>  $this->manager->getRepository(Category::class)->findByTerm('normal'),
+            'routeName' => $routeName,
+            'category_id' => $category_id
+        ]);
     }
 
 

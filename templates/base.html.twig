@@ -17,8 +17,11 @@
         <div class="row">
             {{render(controller('App\\Controller\\BarController:mainMenu',
                 {
-                    'routeName' : app.request.attributes.get('_route')
+                    'routeName' : app.request.attributes.get('_route'),
+                    'category_id' : app.request.get('_route') == 'category_beer' ? app.request.attributes.get('id') : ''
                 }))}}
+
+
             <div class="col-md-10">
                 <div class="p-5">
                     <h1 class="mb-4">{{ title }}</h1>
