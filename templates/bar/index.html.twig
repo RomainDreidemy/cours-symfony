@@ -30,4 +30,18 @@
             </div>
         {% endfor %}
     </div>
+
+    <hr class="border mt-5 mb-5 w-100">
+
+    <div class="row">
+        <div class="col-3">
+            Nombre de clients : {{ clients|length }}
+        </div>
+
+        <div class="col-9">
+            {% for client in clients %}
+            <p>{{ client.name }}, agé de {{ client.age }} ans, a acheté: {{ client.statistics|length }} bière(s)</p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

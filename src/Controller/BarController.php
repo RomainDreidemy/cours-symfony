@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Beer;
 use App\Entity\Category;
+use App\Entity\Client;
 use App\Entity\Country;
 use App\Services\BeerService;
 use App\Services\CountryService;
@@ -33,7 +34,8 @@ class BarController extends AbstractController
         return $this->render('bar/index.html.twig', [
             'title' => 'The Bar',
             'countries' => $this->countryService->getAll(),
-            'beers' => $this->manager->getRepository(Beer::class)->findLast(3)
+            'beers' => $this->manager->getRepository(Beer::class)->findLast(3),
+            'clients' => $this->manager->getRepository(Client::class)->findAll()
         ]);
     }
 
