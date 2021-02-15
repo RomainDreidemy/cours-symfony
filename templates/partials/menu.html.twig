@@ -2,25 +2,29 @@
     <ul class="nav flex-column min-vh-100 h-100 bg-dark pt-5 pr-2 pl-2">
         <h2 class="text-white align-self-center">The Bar</h2>
 
-        <li class="nav-item border-bottom">
+        <li class="nav-item">
             <a class="nav-link text-white {{ routeName == 'bar' ? 'active' : '' }}" href="{{ path('bar') }}">Bar</a>
         </li>
-        <li class="nav-item border-bottom">
-            <a class="nav-link text-white {{ routeName == 'mentions' ? 'active' : '' }}" href="{{ path('mentions') }}">Mentions</a>
+        <li class="nav-item">
+            <a class="nav-link text-white {{ routeName == 'mentions' ? 'active' : '' }}" href="{{ path('mentions') }}">Mentions légales</a>
         </li>
-{#        <li class="nav-item border-bottom">#}
-{#            <a class="nav-link text-white {{ routeName == 'beers' ? 'active' : '' }}" href="{{ path('beers') }}">Bières</a>#}
-{#        </li>#}
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white mt-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Catégories
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for category in categories %}
-                    <a class="dropdown-item {{ category_id == category.id ? 'active' : '' }}" href="{{ path('category_beer', { id: category.id }) }}">{{ category.name }}</a>
-                {% endfor %}
-            </div>
-        </li>
+        <h2 class="text-white mt-5">Nos bières</h2>
+        {% for category in categories %}
+            <li class="nav-item">
+                <a class="nav-link text-white {{ category_id == category.id ? 'active' : '' }}" href="{{ path('category_beer', {id: category.id}) }}">Bière {{ category.name }}</a>
+            </li>
+        {% endfor %}
+
+{#        <li class="nav-item dropdown">#}
+{#            <a class="nav-link dropdown-toggle text-white mt-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                Catégories#}
+{#            </a>#}
+{#            <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                {% for category in categories %}#}
+{#                    <a class="dropdown-item {{ category_id == category.id ? 'active' : '' }}" href="{{ path('category_beer', { id: category.id }) }}">{{ category.name }}</a>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </li>#}
     </ul>
 </div>

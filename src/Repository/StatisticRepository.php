@@ -19,32 +19,56 @@ class StatisticRepository extends ServiceEntityRepository
         parent::__construct($registry, Statistic::class);
     }
 
-    // /**
-    //  * @return Statistic[] Returns an array of Statistic objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function averageBuy(): float
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+        $query = $this->createQueryBuilder('s')
+            ->select('count(c.id) as Count')
+            ->innerJoin('s.client', 'c')
+            ->groupBy('c.id')
             ->getQuery()
-            ->getResult()
+            ->getSQL()
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Statistic
+        $rawQuery = 'SELECT avg(sclr_0) as average FROM (' . $query . ') test';
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $stmt = $conn->prepare($rawQuery);
+        $stmt->execute();
+
+        return floatval($stmt->fetchOne());
+    }
+
+    public function averageScore(): float
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+        return floatval($this->createQueryBuilder('s')
+            ->select('avg(s.score)')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult()[1])
         ;
     }
-    */
+
+    public function higterScore()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.score')
+            ->orderBy('s.score', 'desc')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()['score']
+        ;
+    }
+
+    public function lowerScore()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.score')
+            ->orderBy('s.score', 'asc')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()['score']
+        ;
+    }
+
 }

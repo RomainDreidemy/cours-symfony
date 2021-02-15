@@ -8,10 +8,9 @@
             {% endif %}
             <p class="card-text">
                 <p>{{ beer.description }}</p>
-                <p>Degrées: {{ beer.degree }}</p>
-                {#                <p>{{ beer.publishedAt|date('d/m/Y') }}</p>#}
+                <p>Degrées: {{ beer.degree }}°C</p>
                 <p>Prix: {{ beer.price }}€</p>
-                <p>Country: <a href="{{ path('country_beer', {'id': beer.country.id}) }}">{{ beer.country.name }}</a></p>
+                <p>Pays: <a href="{{ path('country_beer', {'id': beer.country.id}) }}">{{ beer.country.name }}</a></p>
                 <p>Catégories</p>
                 <ul>
                     {% for category in beer.categories %}
@@ -19,7 +18,12 @@
                     {%  endfor %}
                 </ul>
             </p>
-            {#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+
+            {% if beer.statistics|length > 0 %}
+                <p>Cette bière a été acheté {{ beer.statistics|length }} fois</p>
+            {% else %}
+                <p>Soyez le premier a essayer cette bière !</p>
+            {% endif %}
         </div>
     </div>
 </div>

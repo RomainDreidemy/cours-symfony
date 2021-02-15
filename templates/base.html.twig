@@ -3,8 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>{{ title }} | The Bar</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -15,7 +13,7 @@
     </head>
     <body>
         <div class="row">
-            {{render(controller('App\\Controller\\BarController:mainMenu',
+            {{render(controller('App\\Controller\\PartialController:mainMenu',
                 {
                     'routeName' : app.request.attributes.get('_route'),
                     'category_id' : app.request.get('_route') == 'category_beer' ? app.request.attributes.get('id') : ''

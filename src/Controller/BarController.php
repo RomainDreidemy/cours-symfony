@@ -6,8 +6,10 @@ use App\Entity\Beer;
 use App\Entity\Category;
 use App\Entity\Client;
 use App\Entity\Country;
+use App\Entity\Statistic;
 use App\Services\BeerService;
 use App\Services\CountryService;
+use App\Services\StatisticService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,15 +29,34 @@ class BarController extends AbstractController
     }
 
     /**
+     * @Route("/", name="bar_redirect")
+     */
+    public function barRedirect(): Response{ return $this->redirectToRoute('bar'); }
+
+    /**
      * @Route("/bar", name="bar")
      */
     public function index(): Response
     {
+        $this->manager->getRepository(Statistic::class)->averageScore();
+
+        $statisticManager = $this->manager->getRepository(Statistic::class);
+
         return $this->render('bar/index.html.twig', [
             'title' => 'The Bar',
             'countries' => $this->countryService->getAll(),
             'beers' => $this->manager->getRepository(Beer::class)->findLast(3),
-            'clients' => $this->manager->getRepository(Client::class)->findAll()
+            'clients' => $this->manager->getRepository(Client::class)->findAll(),
+            'statistiques' => [
+                'averageBuy' => number_format($statisticManager->averageBuy(), 2),
+                'averageAge' => number_format($this->manager->getRepository(Client::class)->averageAge(),2),
+                'clientHaveAlreadyByABeer' => $this->manager->getRepository(Client::class)->haveAlreadyByABeer(),
+                'score' => [
+                    'average' => number_format($statisticManager->averageScore(), 2),
+                    'highter' => $statisticManager->higterScore(),
+                    'lower' => $statisticManager->lowerScore()
+                ]
+            ]
         ]);
     }
 
@@ -59,16 +80,6 @@ class BarController extends AbstractController
             'beers' => $this->beerService->getAll()
         ]);
     }
-
-    /**
-     * @Route("/newbeer", name="create_beer")
-     */
-//    public function createBeer(): Response
-//    {
-//        $beer = $this->beerService->create();
-//
-//        return new Response('Saved new beer with id ' . $beer->getId());
-//    }
 
     /**
      * @Route("/country/{id}", name="country_beer")
@@ -102,16 +113,4 @@ class BarController extends AbstractController
             'beer' => $beer
         ]);
     }
-
-    public function mainMenu(string $routeName, string $category_id) {
-        return $this->render('partials/menu.html.twig', [
-            'categories' =>  $this->manager->getRepository(Category::class)->findByTerm('normal'),
-            'routeName' => $routeName,
-            'category_id' => $category_id
-        ]);
-    }
-
-
-
-
 }
