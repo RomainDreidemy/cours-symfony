@@ -35,12 +35,13 @@ class Category
     private $beer;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=100, options={"default": "normal"})
      */
     private $term;
 
     public function __construct()
     {
+        $this->setTerm('normal');
         $this->beer = new ArrayCollection();
     }
 

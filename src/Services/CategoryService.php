@@ -18,8 +18,11 @@ class CategoryService
         $category = (new Category())
             ->setName($name)
             ->setDescription($description)
-            ->setTerm($term)
         ;
+
+        if(!is_null($term)){
+            $category->setTerm($term);
+        }
 
         $this->manager->persist($category);
         $this->manager->flush();

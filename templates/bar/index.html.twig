@@ -1,6 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <h2>Dernières bières</h2>
+    <div class="row">
+
+        {% for beer in beers %}
+            {% include 'partials/beer-card.html.twig' with {'beer': beer} %}
+        {% endfor %}
+    </div>
+
+    <hr class="border mt-5 mb-5 w-100">
+
+    <h2>Les pays</h2>
     <div class="row">
         {% for country in countries %}
             <div class="col-sm-4 mb-4">

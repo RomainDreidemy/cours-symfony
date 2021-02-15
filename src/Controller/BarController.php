@@ -32,7 +32,8 @@ class BarController extends AbstractController
     {
         return $this->render('bar/index.html.twig', [
             'title' => 'The Bar',
-            'countries' => $this->countryService->getAll()
+            'countries' => $this->countryService->getAll(),
+            'beers' => $this->manager->getRepository(Beer::class)->findLast(3)
         ]);
     }
 
@@ -60,12 +61,12 @@ class BarController extends AbstractController
     /**
      * @Route("/newbeer", name="create_beer")
      */
-    public function createBeer(): Response
-    {
-        $beer = $this->beerService->create();
-
-        return new Response('Saved new beer with id ' . $beer->getId());
-    }
+//    public function createBeer(): Response
+//    {
+//        $beer = $this->beerService->create();
+//
+//        return new Response('Saved new beer with id ' . $beer->getId());
+//    }
 
     /**
      * @Route("/country/{id}", name="country_beer")
@@ -86,6 +87,17 @@ class BarController extends AbstractController
         return $this->render('bears/index.html.twig', [
             'title' => $category->getName(),
             'beers' => $category->getBeer()
+        ]);
+    }
+
+    /**
+     * @Route("/beer/{id}", name="beer")
+     */
+    public function show(Beer $beer): Response
+    {
+        return $this->render('beer/beer.html.twig', [
+            'title' => $beer->getName(),
+            'beer' => $beer
         ]);
     }
 

@@ -22,13 +22,14 @@ class BeerService
         return $this->manager->getRepository(Beer::class)->findAll();
     }
 
-    public function create(string $name, \DateTime $publishedAt = null, string $description = null, float $price = null, array $categories = [], Country $country = null): Beer
+    public function create(string $name, float $degree, \DateTime $publishedAt = null, string $description = null, float $price = null, array $categories = [], Country $country = null): Beer
     {
         $beer = (new Beer())
             ->setName($name)
             ->setPublishedAt($publishedAt)
             ->setDescription($description)
             ->setPrice($price)
+            ->setDegree($degree)
         ;
 
         foreach ($categories as $category){

@@ -33,16 +33,17 @@ class BeerFixtures extends Fixture implements DependentFixtureInterface
 
         $countries = $this->countryService->getAll();
 
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 25; $i++){
             $categories = $faker->randomElements($categoriesSpecial, 2);
             $categories[] = $faker->randomElement($categoriesNormal);
 
             $this->beerService->create(
                 $faker->name,
+                $faker->randomFloat(2, 4, 80),
                 $faker->dateTime,
                 $faker->text('200'),
                 $faker->randomFloat(2, 10.00, 500.00),
-                $faker->randomElements($categories, 2, false),
+                $categories,
                 $faker->randomElement($countries)
             );
         }

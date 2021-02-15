@@ -19,10 +19,11 @@ class CountryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
+        $countries = ['belgium', 'french', 'English', 'germany'];
 
-        for($i=0; $i < 6; $i++){
+        foreach ($countries as $country){
             $this->countryService->create(
-                $faker->name,
+                $country,
                 $faker->address,
                 $faker->email
             );

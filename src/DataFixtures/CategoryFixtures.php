@@ -25,8 +25,7 @@ class CategoryFixtures extends Fixture
         foreach ($categoriesNormals as $categorieNormal){
             $this->categoryService->create(
                 $categorieNormal,
-                $faker->text('400'),
-                'normal'
+                $faker->text('400')
             );
         }
 

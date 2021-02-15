@@ -3,18 +3,7 @@
 {% block body %}
     <div class="row">
         {% for beer in beers %}
-            <div class="col-md-4 mb-4">
-                <div class="card border rounded">
-                    <img class="card-img-top" src="{{ asset('assets/images/biere.jpg') }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ beer.name }}</span></h5>
-                        <p class="card-text">Degrées: {{ beer.description }}</p>
-                        <p>{{ beer.publishedAt|date('d/m/Y') }}</p>
-                        <p>Prix: {{ beer.price }}€</p>
-{#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
-                    </div>
-                </div>
-            </div>
+            {% include 'partials/beer-card.html.twig' with {'beer': beer, picture: true} %}
         {% endfor %}
     </div>
 {% endblock %}

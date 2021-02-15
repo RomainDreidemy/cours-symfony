@@ -1,0 +1,5 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'partials/beer-card.html.twig' with {'beer': beer, picture: true} %}
+{% endblock %}

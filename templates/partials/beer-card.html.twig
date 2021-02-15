@@ -1,0 +1,22 @@
+<div class="col-md-4 mb-4">
+    <div class="card border rounded">
+        {#            <img class="card-img-top" src="{{ asset('assets/images/biere.jpg') }}" alt="Card image cap">#}
+        <div class="card-body">
+            <h5 class="card-title"><a href="{{ path('beer', {id: beer.id}) }}">{{ beer.name }}</a></span></h5>
+            {% if picture is defined and picture %}
+                <img class="card-img-top" src="{{ asset('assets/images/biere.jpg') }}">
+            {% endif %}
+            <p class="card-text">Degrées: {{ beer.description }}</p>
+            {#                <p>{{ beer.publishedAt|date('d/m/Y') }}</p>#}
+            <p>Prix: {{ beer.price }}€</p>
+            <p>Country: <a href="{{ path('country_beer', {'id': beer.country.id}) }}">{{ beer.country.name }}</a></p>
+            <p>Catégories</p>
+            <ul>
+                {% for category in beer.categories %}
+                    <li>{{ category.name }}</li>
+                {%  endfor %}
+            </ul>
+            {#                        <a href="#" class="btn btn-primary">Go somewhere</a>#}
+        </div>
+    </div>
+</div>
