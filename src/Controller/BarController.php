@@ -19,12 +19,14 @@ class BarController extends AbstractController
 {
     private $beerService;
     private $countryService;
+    private $statisticService;
     private $manager;
 
-    public function __construct(BeerService $beerService, CountryService $countryService, EntityManagerInterface $manager)
+    public function __construct(BeerService $beerService, CountryService $countryService, EntityManagerInterface $manager, StatisticService $statisticService)
     {
         $this->beerService = $beerService;
         $this->countryService = $countryService;
+        $this->statisticService = $statisticService;
         $this->manager = $manager;
     }
 
@@ -38,24 +40,25 @@ class BarController extends AbstractController
      */
     public function index(): Response
     {
-        $this->manager->getRepository(Statistic::class)->averageScore();
-
         $statisticManager = $this->manager->getRepository(Statistic::class);
+        $clientManager = $this->manager->getRepository(Client::class);
 
         return $this->render('bar/index.html.twig', [
             'title' => 'The Bar',
             'countries' => $this->countryService->getAll(),
             'beers' => $this->manager->getRepository(Beer::class)->findLast(3),
-            'clients' => $this->manager->getRepository(Client::class)->findAll(),
+            'clients' => $clientManager->findAll(),
             'statistiques' => [
                 'averageBuy' => number_format($statisticManager->averageBuy(), 2),
-                'averageAge' => number_format($this->manager->getRepository(Client::class)->averageAge(),2),
-                'clientHaveAlreadyByABeer' => $this->manager->getRepository(Client::class)->haveAlreadyByABeer(),
+                'averageAge' => number_format($clientManager->averageAge(),2),
+                'clientHaveAlreadyByABeer' => $clientManager->haveAlreadyByABeer(),
                 'score' => [
                     'average' => number_format($statisticManager->averageScore(), 2),
                     'highter' => $statisticManager->higterScore(),
                     'lower' => $statisticManager->lowerScore()
-                ]
+                ],
+                'ecartType' => $this->statisticService->getEcartTypeForBeerClient(),
+                'clientsOrderByCountBeer' => $clientManager->findAllOrderByCountBeer('desc')
             ]
         ]);
     }

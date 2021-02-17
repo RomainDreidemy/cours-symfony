@@ -36,4 +36,16 @@ class ClientRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findAllOrderByCountBeer(string $order): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.statistics', 's')
+            ->groupBy('c')
+            ->orderBy('COUNT(s.id)', $order)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
