@@ -43,7 +43,7 @@ public function findCatSpecial(int $id)
 #### Qu'est ce que retourne la méthode
 Retourne la liste des catégories spécials pour une bière dont l'id est donné.
 
-#### Détail
+#### Détails
 ```php
 ->join('c.beers', 'b')
 ```
@@ -70,6 +70,4 @@ Créer un instance pour la requête.
 ->getResult()
 ```
 Retourne un tableau de Category.
-
-Définition: 
 
