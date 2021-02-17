@@ -28,7 +28,7 @@ class StatisticFixtures extends Fixture implements DependentFixtureInterface
 
         foreach ($clients as $client)
         {
-            $nb = random_int(0, 3);
+            $nb = random_int(0, 55);
 
             for ($i = 0; $i < $nb; $i++){
                 $this->statisticService->create(
