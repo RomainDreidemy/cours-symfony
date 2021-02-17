@@ -38,5 +38,38 @@ public function findCatSpecial(int $id)
 }
 ```
 
-Définition: Retourne la liste des catégories spécials pour une bière dont l'id est donné.
+### Définition
+
+#### Qu'est ce que retourne la méthode
+Retourne la liste des catégories spécials pour une bière dont l'id est donné.
+
+#### Détail
+```php
+->join('c.beers', 'b')
+```
+Joint la table Beer à la requête.
+
+```php
+->where('b.id = :id')
+->setParameter('id', $id)
+```
+Condition pour filtrer juste les catégories lié à la bière correspondant à $id
+
+```php
+->andWhere('c.term = :term')
+->setParameter('term', 'special')
+```
+Condition pour filtrer juste les catégories dont la valeur de la colonne term est égale à special
+
+```php
+->getQuery()
+```
+Créer un instance pour la requête.
+
+```php
+->getResult()
+```
+Retourne un tableau de Category.
+
+Définition: 
 

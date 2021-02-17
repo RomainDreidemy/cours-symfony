@@ -12,8 +12,12 @@
         {% endif %}
         <div class="card-body">
             <h5 class="card-title"><a href="{{ path('beer', {id: beer.id}) }}">{{ beer.name }}</a></span></h5>
-            <p class="card-text">
-                {{ beer.description }}
+            <p class="card-text text-justify">
+                {% if cutDescription is defined and cutDescription %}
+                    {{ beer.description|slice(0, 100) }}...
+                {% else %}
+                    {{ beer.description }}
+                {% endif %}
             </p>
         </div>
 

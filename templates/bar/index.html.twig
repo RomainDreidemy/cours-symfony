@@ -5,7 +5,7 @@
     <div class="row">
 
         {% for beer in beers %}
-            {% include 'partials/beer-card.html.twig' with {'beer': beer, picture: true} %}
+            {% include 'partials/beer-card.html.twig' with {'beer': beer, picture: true, cutDescription: true} %}
         {% endfor %}
     </div>
 
