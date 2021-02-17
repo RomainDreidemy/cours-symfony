@@ -31,7 +31,7 @@ class CategoryRepository extends ServiceEntityRepository
 
 
     /**
-     * Selectionne la liste des catégories spécials pour une bière dont l'id est donné.
+     * Retourne la liste des catégories spécials pour une bière dont l'id est donné.
      * @param int $id
      * @return int|mixed|string
      */
