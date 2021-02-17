@@ -7,6 +7,16 @@
 - VINCELET Mathias
 - DREIDEMY Romain
 
+## Partie 3
+
+### Shémas
+
+![](public/assets/modélisation/shemas.png)
+
+### Justification
+Dans la base de données, je n'ai pas ajouté la colonne "category_id" car nous avons déjà une jointure avec la table Beer qui à elle même une jointure avec la table Category.
+Pour moi ajouter cette colonne serait dupliquer une information. 
+
 
 ## Partie 4
 ```php
