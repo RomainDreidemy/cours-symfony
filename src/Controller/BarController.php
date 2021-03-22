@@ -9,6 +9,7 @@ use App\Entity\Country;
 use App\Entity\Statistic;
 use App\Services\BeerService;
 use App\Services\CountryService;
+use App\Services\Hello;
 use App\Services\StatisticService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,6 +115,16 @@ class BarController extends AbstractController
         return $this->render('beer/beer.html.twig', [
             'title' => $beer->getName(),
             'beer' => $beer
+        ]);
+    }
+
+    /**
+     * @Route("/showService", name="showService")
+     */
+    public function showService(Hello $hello): Response
+    {
+        return $this->render('service/index.html.twig', [
+            'title' => $hello->say(),
         ]);
     }
 }
