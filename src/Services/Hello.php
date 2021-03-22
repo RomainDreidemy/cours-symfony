@@ -6,7 +6,14 @@ namespace App\Services;
 
 class Hello
 {
+    private $message;
+
+    public function __construct($message)
+    {
+        $this->message = $message['message'];
+    }
+
     public function say(){
-        return "Hello Service";
+        return $this->message;
     }
 }
