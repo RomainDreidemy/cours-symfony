@@ -10,7 +10,9 @@ use App\Entity\Statistic;
 use App\Services\BeerService;
 use App\Services\CountryService;
 use App\Services\Hello;
+use App\Services\HelperParser;
 use App\Services\StatisticService;
+use cebe\markdown\Markdown;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,10 +123,19 @@ class BarController extends AbstractController
     /**
      * @Route("/showService", name="showService")
      */
-    public function showService(Hello $hello): Response
+    public function showService(Hello $hello, HelperParser $helperParser): Response
     {
+        $markdows = [
+            'post' => <<<EOT
+* Pommes
+* Poires
+    * Sous élément avec au moins quatre espaces devant.
+EOT
+        ];
+
         return $this->render('service/index.html.twig', [
             'title' => $hello->say(),
+            'text' => $helperParser->markdownToHtml($markdows['post'])
         ]);
     }
 }

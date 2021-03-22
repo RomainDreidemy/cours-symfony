@@ -35,3 +35,5 @@ services:
     App\Services\Hello:
         arguments:
             - message: '%app_hello_message%'
+
+    cebe\markdown\Markdown: ~
