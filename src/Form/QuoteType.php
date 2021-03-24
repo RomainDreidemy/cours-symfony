@@ -18,7 +18,7 @@ class QuoteType extends AbstractType
             ->add('content')
             ->add('position', ChoiceType::class, [
                 'choices' => [
-                    'position' => 'position',
+                    'important' => 'important',
                     'none' => 'none',
                     'Aucune' => null
                 ]

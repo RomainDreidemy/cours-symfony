@@ -11,8 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Quote
 {
-    const PRIORITY_NONE = 'none';
-    const PRIORITY_IMPORTANT = 'important';
+    const PRIORITY = ['none', 'important', null];
+//    const PRIORITY_NONE = 'none';
+//    const PRIORITY_IMPORTANT = 'important';
 
     public function __construct()
     {
@@ -45,7 +46,7 @@ class Quote
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Choice({"important", "none", null})
+     * @Assert\Choice(choices=Quote::PRIORITY, message="Cette valeur ne fait pas partie de la liste")
      */
     private $position;
 
@@ -90,7 +91,7 @@ class Quote
 
     public function setPosition(?string $position): self
     {
-        if (!in_array($position, array(self::PRIORITY_NONE, self::PRIORITY_IMPORTANT, null))) {
+        if (!in_array($position, self::PRIORITY)) {
             throw new \InvalidArgumentException("Invalid status");
         }
 

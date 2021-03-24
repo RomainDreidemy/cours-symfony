@@ -23,6 +23,16 @@
             <div class="col-md-10">
                 <div class="p-5">
                     <h1 class="mb-4">{{ title }}</h1>
+
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
                     {% block body %}{% endblock %}
                 </div>
             </div>

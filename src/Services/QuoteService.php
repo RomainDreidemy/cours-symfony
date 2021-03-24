@@ -4,16 +4,21 @@
 namespace App\Services;
 
 
+use App\Entity\Quote;
 use App\Repository\QuoteRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class QuoteService
 {
     private $quoteRepository;
     private $parser;
-    public function __construct(QuoteRepository $quoteRepository, HelperParser $parser)
+    private $manager;
+
+    public function __construct(QuoteRepository $quoteRepository, HelperParser $parser, EntityManagerInterface $manager)
     {
         $this->quoteRepository = $quoteRepository;
         $this->parser = $parser;
+        $this->manager = $manager;
     }
 
     public function getQuotesAsHtml()
@@ -23,6 +28,7 @@ class QuoteService
         $htmlQuotes = [];
         foreach ($quotes as $quote){
             $htmlQuotes[] = [
+                'id' => $quote->getId(),
                 'title' => $quote->getTitle(),
                 'content' => $this->parser->markdownToHtml($quote->getContent()),
                 'position' => $quote->getPosition(),
@@ -40,5 +46,10 @@ class QuoteService
         $qNull = $this->quoteRepository->findByPosition(null);
 
         return array_merge($qImportants, $qNone, $qNull);
+    }
+
+    public function delete(Quote $quote){
+        $this->manager->remove($quote);
+        $this->manager->flush();
     }
 }
