@@ -1,5 +1,10 @@
 # Travaux pratique: Beer
 
+## Configuration
+- **php version**: 7.4.16  
+- **mysql version**: 5.7.31
+- **symfony version**: 5.2
+
 ## Membres du groupe
 - ROUX Fiona
 - BALDUCCI Victor
