@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\QuoteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=QuoteRepository::class)
@@ -12,6 +13,11 @@ class Quote
 {
     const PRIORITY_NONE = 'none';
     const PRIORITY_IMPORTANT = 'important';
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime('now');
+    }
 
     /**
      * @ORM\Id
@@ -22,16 +28,24 @@ class Quote
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champs ne peut pas être vide.")
+     * @Assert\Length(min=5,
+     *     max=60,
+     *     minMessage="Le champs doit contenir au moins 5 caractères.",
+     *     maxMessage="Le champs doit contenir 60 caractères minimum."
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le champs ne peut pas être vide.")
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Choice({"important", "none", null})
      */
     private $position;
 
