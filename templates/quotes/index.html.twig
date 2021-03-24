@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+        {% for quote in quotes %}
+            <h2>{{ quote.title }}</h2>
+            {{ quote.content | raw}}
+            <hr>
+        {% endfor %}
+{% endblock %}

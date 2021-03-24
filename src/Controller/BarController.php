@@ -6,11 +6,14 @@ use App\Entity\Beer;
 use App\Entity\Category;
 use App\Entity\Client;
 use App\Entity\Country;
+use App\Entity\Quote;
 use App\Entity\Statistic;
+use App\Repository\QuoteRepository;
 use App\Services\BeerService;
 use App\Services\CountryService;
 use App\Services\Hello;
 use App\Services\HelperParser;
+use App\Services\QuoteService;
 use App\Services\StatisticService;
 use cebe\markdown\Markdown;
 use Doctrine\ORM\EntityManagerInterface;
@@ -135,7 +138,19 @@ EOT
 
         return $this->render('service/index.html.twig', [
             'title' => $hello->say(),
-            'text' => $helperParser->markdownToHtml($markdows['post'])
+            'text' => $helperParser->markdownToHtml($markdows['post']),
+        ]);
+    }
+
+    /**
+     * @Route("/quotes", name="quotes")
+     */
+    public function quotes(QuoteService $quoteService): Response
+    {
+
+        return $this->render('quotes/index.html.twig', [
+            'title' => 'Liste de citations',
+            'quotes' => $quoteService->getQuotesAsHtml(),
         ]);
     }
 }
