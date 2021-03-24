@@ -27,8 +27,12 @@ class QuoteFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
             $post = new Quote;
-            $post->setTitle($faker->catchPhrase)
-                ->setContent($faker->markdown);
+            $post
+                ->setTitle($faker->catchPhrase)
+                ->setContent($faker->markdown)
+                ->setPosition($faker->randomElement(['none', 'important', null]))
+                ->setCreatedAt($faker->dateTimeBetween('-2 years', 'now'))
+            ;
 
             $manager->persist($post);
         }
