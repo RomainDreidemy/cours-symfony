@@ -3,8 +3,6 @@
 {% block body %}
         {{ text|raw }}
         {% apply markdown_to_html %}
-                {% for quote in quotes %}
-                        {{ quote.content }}
-                {% endfor %}
+
         {% endapply %}
 {% endblock %}

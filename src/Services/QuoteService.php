@@ -18,16 +18,27 @@ class QuoteService
 
     public function getQuotesAsHtml()
     {
-        $quotes = $this->quoteRepository->findAll();
+        $quotes = $this->findAll();
 
         $htmlQuotes = [];
         foreach ($quotes as $quote){
             $htmlQuotes[] = [
                 'title' => $quote->getTitle(),
-                'content' => $this->parser->markdownToHtml($quote->getContent())
+                'content' => $this->parser->markdownToHtml($quote->getContent()),
+                'position' => $quote->getPosition(),
+                'createdAt' => $quote->getCreatedAt()
             ];
         }
 
         return $htmlQuotes;
+    }
+
+    public function findAll(): array
+    {
+        $qImportants = $this->quoteRepository->findByPosition('important');
+        $qNone = $this->quoteRepository->findByPosition('none');
+        $qNull = $this->quoteRepository->findByPosition(null);
+
+        return array_merge($qImportants, $qNone, $qNull);
     }
 }

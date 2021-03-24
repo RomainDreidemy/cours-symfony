@@ -1,9 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        {% for quote in quotes %}
-            <h2>{{ quote.title }}</h2>
-            {{ quote.content | raw}}
-            <hr>
-        {% endfor %}
+    {% for quote in quotes %}
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ quote.title }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ quote.content|raw }}</p>
+                <a href="#" class="btn btn-danger">Supprimer</a>
+            </div>
+
+            <div class="card-footer">
+                {{ quote.position is null ? 'Non précisé' : quote.position }} - {{ quote.createdAt|date('Y-m-d') }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

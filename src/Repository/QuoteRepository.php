@@ -19,6 +19,27 @@ class QuoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Quote::class);
     }
 
+    public function findByPosition(?string $position)
+    {
+        $query = $this->createQueryBuilder('q');
+
+        if(!is_null($position)){
+            $query
+                ->where('q.position = :position')
+                ->setParameter('position', $position)
+            ;
+        }else{
+            $query
+                ->where('q.position is null')
+            ;
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Quote[] Returns an array of Quote objects
     //  */
